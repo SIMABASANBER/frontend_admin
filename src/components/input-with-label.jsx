@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
  
-import { cn } from "@/utils"
+import { cn } from "@/utils/shadcn"
 
 export function InputLabel({register, error, label, id, placeholder, name, type, isLogin}) {
   return (
