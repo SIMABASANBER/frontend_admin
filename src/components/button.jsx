@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/utils";
+import { cn } from "@/utils/shadcn";
 import { Button } from "@/components/ui/button";
 
 const ButtonClick = React.forwardRef(({ className, type, id, label, width, height, textColor, bgColor, ...props },ref) => {
