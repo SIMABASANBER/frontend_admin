@@ -1,9 +1,10 @@
 import Swal from "sweetalert2";
 import useStore from "@/utils/store/store";
 import { useNavigate } from "react-router-dom";
-import { useToken } from "@/utils/context/token";
+// import { useToken } from "@/utils/context/token";
 import dropdown from "@/assets/icon/DropDown.png";
-import hamburgerIcon from "@/assets/logos/hamburger.svg";
+import hamburgerIcon from "@/assets/logo/hamburger.svg";
+import btnLogout from "@/assets/icon/btn-logout.svg"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,11 +25,11 @@ const Toast = Swal.mixin({
 function Navbar() {
   const navigate = useNavigate();
   const { toggleSidebar } = useStore();
-  const { token, profile, changeToken, changeProfile } = useToken();
+  // const { token, profile, changeToken, changeProfile } = useToken();
 
   function handleLogout() {
     changeToken("");
-    changeProfile("");
+    // changeProfile("");
     Toast.fire({ icon: "success", title: "Logout berhasil" });
     navigate("/login");
   }
@@ -41,20 +42,18 @@ function Navbar() {
           id="toggling-profile-dropdown"
           className="text-white flex items-center gap-x-2 mr-10"
         >
-          Hi, {profile && typeof profile !== "object" ? JSON.parse(profile).fullname : "Admin"}
+          Hi, Admin
           <img src={dropdown} />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className={token === "" ? "hidden" : ""}>
+        <DropdownMenuContent>
           <div className="px-3 py-2 text-[#F64C4C] cursor-pointer flex gap-2">
-            <img id="btn-logout" src="./btn-logout.svg" alt="btn-logout" className="w-5 h-5" />
-            {token === "" ? (
-              <></>
-            ) : (
+            <img id="btn-logout" src={btnLogout}alt="btn-logout" className="w-5 h-5" />
+
               <p className="mt-[-0.125rem]" onClick={() => handleLogout()}>
                 Keluar
               </p>
-            )}
+            
           </div>
         </DropdownMenuContent>
       </DropdownMenu>
