@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import simabalogo from "@/assets/simabalogo.png";
-import HomeIcon from "@/assets/icons/home";
-import UserIcon from "@/assets/icon/user";
-import HandIcon from "@/assets/icons/hand";
+import simabalogo from "@/assets/logo/simabalogo.png";
+import HomeIcon from "@/assets/icon/home";
+import { User } from "lucide-react";
+import HandIcon from "@/assets/icon/hand";
 import RankingIcon from "@/assets/icon/ranking";
 
 
@@ -13,15 +13,7 @@ function Sidebar({ isOpen }) {
       className={`${isOpen ? "w-72" : "w-20"} h-screen bg-white shadow-xl duration-300`}
     >
       <div className="flex justify-center items-center py-5 mb-5">
-        <img src={simabalogo} style={{ width: "45px" }} alt="Simaba Logo" />
-        <h1
-          style={{ color: "#293066" }}
-          className={`text-xl whitespace-nowrap font-medium uppercase ms-3 text-primary ${
-            !isOpen && "hidden"
-          }`}
-        >
-          <span className="font-bold">SIMABA</span>
-        </h1>
+        <img src={simabalogo} style={{ width: "80px" }} alt="Simaba Logo" />
       </div>
       <ul className={`flex flex-col ${isOpen && "gap-4"}`}>
         <li>
@@ -77,7 +69,7 @@ function Sidebar({ isOpen }) {
                   isActive ? "border-[#293066]" : "border-transparent"
                 } ${!isOpen ? "justify-center" : "gap-2"}`}
               >
-                <UserIcon
+                <User
                   className={`w-5 h-5 ${isOpen ? "ms-3" : "ms-[-5px]"} ${
                     isActive ? "text-[#293066]" : "text-[#4B4B4B99]"
                   }`}
