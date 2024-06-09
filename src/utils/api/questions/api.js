@@ -2,15 +2,10 @@ import axiosWithConfig from "../axiosWithConfig";
 
 export const getQuestions = async (pageIndex, pageSize, name) => {
   try {
-    if (name) {
-      const response = await axiosWithConfig.get(`/quesions?name=${name}`);
-      return response.data;
-    } else {
       const response = await axiosWithConfig.get(
         `/quesions?page=${pageIndex}&page_size=${pageSize}`
       );
       return response.data;
-    }
   } catch (error) {
     console.error(error);
     throw error;
