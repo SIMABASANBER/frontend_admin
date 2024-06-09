@@ -1,16 +1,5 @@
 import axiosWithConfig from "../axiosWithConfig";
 
-export const getTotaUser = async () => {
-  try {
-    const response = await axiosWithConfig.get("/users");
-    const { total_data } = response.data.pagination;
-    return total_data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return 0;
-  }
-};
-
 export const getUsers = async (pageIndex, pageSize, name) => {
   try {
     if (name) {
@@ -28,10 +17,28 @@ export const getUsers = async (pageIndex, pageSize, name) => {
   }
 };
 
-export const getDetailUser = async (id) => {
+export const getUserById = async (id) => {
   try {
     const response = await axiosWithConfig.get(`/users/${id}`);
     return response.data.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const addUser = async ({ ...data }) => {
+  try {
+    await axiosWithConfig.post(
+      "/user",
+      { ...data },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return "Berhasil menambah user";
   } catch (error) {
     console.error(error);
     throw error;
