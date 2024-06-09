@@ -209,7 +209,7 @@ const userForm = ({ action, id }) => {
                 id="btn-action-negative"
                 disabled={processing}
                 onClick={() => navigate("/user")}
-                className="bg-white w-24 text-[#293066] border-solid border-2 border-[#293066] hover:bg-[#293066] hover:text-white"
+                className={`bg-white w-24 text-[#293066] border-solid border-2 border-[#293066] hover:bg-[#293066] hover:text-white ${action === 'detail' ? 'hidden' : ''}`}
               >
                 Kembali
               </Button>
@@ -217,12 +217,14 @@ const userForm = ({ action, id }) => {
                 size="sm"
                 type="submit"
                 id="btn-action-positive"
-                className="bg-[#293066] w-24 hover:bg-[#293066]/80"
+                className={`bg-[#293066] w-24 hover:bg-[#293066]/80 ${action === 'detail' ? 'hidden' : ''}`}
               >
                 {processing ? (
                   <Loader2 className="animate-spin w-7 h-7" />
-                ) : (
+                ) :action === "edit" ? (
                   "Edit data"
+                ) : (
+                  "Tambah"
                 )}
               </Button>
             </div>
