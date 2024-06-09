@@ -88,10 +88,6 @@ import {
           </TableBody>
         </Table>
         <div className="flex justify-between items-center jus px-4 py-4 border-t-2">
-          <div className="flex items-center gap-1 text-sm ">
-            <div>Halaman ke</div>
-            {table.getState().pagination.pageIndex + 1} dari {table.getPageCount()}
-          </div>
           <div className="flex gap-3">
             <div className="flex items-center gap-2 text-sm">
               Tampilkan

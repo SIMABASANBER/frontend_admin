@@ -6,6 +6,7 @@ import AddUser from "@/pages/user/add-user";
 import Questions from "@/pages/questions";
 import DetailQuestion from "@/pages/questions/detail-questions";
 import AddQuestion from "@/pages/questions/add-questions";
+import Ranking from "@/pages/ranking";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export default function Router() {
         {
           path: "/questions/create-question",
           element: <AddQuestion/>,
+        },
+        {
+          path: "/ranking",
+          element: <Ranking/>,
         },
   ]);
 
