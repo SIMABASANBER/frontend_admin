@@ -49,6 +49,17 @@ export const columns = [
               <PencilIcon className="w-4 h-4" />
             </Link>
           </Button>
+          <Button
+            asChild
+            size="icon"
+            id={`btn-detail-fundraise-${id}`}
+            className="bg-[#166648] hover:bg-[#166648]/80"
+            style={{ boxShadow: "0px 4px 4px 0px #00000040" }}
+          >
+            <Link to={`/user/${id}`}>
+              <InfoIcon className="w-4 h-4" />
+            </Link>
+          </Button>
           <ButtonDelete id={id} />
         </div>
       );

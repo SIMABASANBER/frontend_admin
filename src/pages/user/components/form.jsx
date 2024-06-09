@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import FileInput from "@/components/input-file";
-import { Textarea } from "@/components/ui/textarea";
 import SkeletonForm from "./skeleton/skeleton-form";
-import { customerSchema, editCustomer, getDetailCustomer } from "@/utils/api/customer";
+import { userSchema, editUser, getDetailUser } from "@/utils/api/user";
 import {
   Form,
   FormControl,
@@ -18,39 +16,34 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NumericFormat } from "react-number-format";
 
-const CustomerForm = ({ action, id }) => {
+const userForm = ({ action, id }) => {
   const navigate = useNavigate();
-  const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
   const form = useForm({
-    resolver: zodResolver(customerSchema),
+    resolver: zodResolver(userSchema),
     defaultValues: {
-      email: "",
       fullname: "",
-      address: "",
-      phone_number: "",
-      gender: "",
-      profile_picture: "",
+      username: "",
+      email: "",
+      from_school: "",
+      graduation_year: "",
     },
   });
 
   useEffect(() => {
     setLoading(true);
-    getDetailCustomer(id)
+    getDetailUser(id)
       .then((data) => {
-        const { fullname, address, phone_number, email, gender, profile_picture } = data;
-
-        setPreview(profile_picture);
-
+        const { fullname, username, email, from_school, graduation_year } =
+          data;
         form.reset({
-          email,
           fullname,
-          address,
-          phone_number,
-          gender,
+          username,
+          email,
+          from_school,
+          graduation_year,
         });
       })
       .catch((message) => {
@@ -62,25 +55,24 @@ const CustomerForm = ({ action, id }) => {
   }, []);
 
   const onSubmit = (data) => {
-    const { email, fullname, address, phone_number, gender, profile_picture } = data;
+    const { fullname, username, email, from_school, graduation_year } = data;
 
     const editedData = {
-      email,
       fullname,
-      address,
-      phone_number,
-      gender,
-      profile_picture,
+      username,
+      email,
+      from_school,
+      graduation_year,
     };
 
     setProcessing(true);
-    editCustomer(id, editedData)
+    editUser(id, editedData)
       .then((message) => {
-        navigate("/pelanggan");
+        navigate("/user");
         Toast.fire({ icon: "success", title: message });
       })
       .catch((message) => {
-        navigate("/pelanggan");
+        navigate("/user");
         Toast.fire({ icon: "error", title: message });
       })
       .finally(() => {
@@ -101,7 +93,10 @@ const CustomerForm = ({ action, id }) => {
 
   return (
     <Form {...form}>
-      <form className="px-6 py-6 mb-6 flex flex-col gap-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="px-6 py-6 mb-6 flex flex-col gap-y-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         {loading ? (
           <SkeletonForm />
         ) : (
@@ -109,14 +104,16 @@ const CustomerForm = ({ action, id }) => {
             <div className="flex gap-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="fullname"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel htmlFor="input-customer-fullname">Email</FormLabel>
+                    <FormLabel htmlFor="input-user-fullname">
+                      Nama lengkap
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        id="input-customer-fullname"
+                        id="input-user-fullname"
                         className="disabled:opacity-100"
                         disabled={action === "detail"}
                       />
@@ -127,14 +124,16 @@ const CustomerForm = ({ action, id }) => {
               />
               <FormField
                 control={form.control}
-                name="fullname"
+                name="username"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel htmlFor="input-customer-fullname">Nama Lengkap</FormLabel>
+                    <FormLabel htmlFor="input-user-fullname">
+                      Username
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        id="input-customer-fullname"
+                        id="input-user-fullname"
                         className="disabled:opacity-100"
                         disabled={action === "detail"}
                       />
@@ -149,12 +148,12 @@ const CustomerForm = ({ action, id }) => {
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="input-customer-address">Alamat</FormLabel>
+                  <FormLabel htmlFor="input-user-address">Email</FormLabel>
                   <FormControl>
-                    <Textarea
+                    <Input
                       {...field}
-                      id="input-customer-address"
-                      className="min-h-[100px] disabled:opacity-100"
+                      id="input-user-address"
+                      className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
                   </FormControl>
@@ -162,66 +161,40 @@ const CustomerForm = ({ action, id }) => {
                 </FormItem>
               )}
             />
-            <div className="flex gap-4">
-              <FormField
-                control={form.control}
-                name="phone_number"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel htmlFor="input-customer-phone_number">No. Handphone</FormLabel>
-                    <FormControl>
-                      <NumericFormat
-                        allowLeadingZeros
-                        customInput={Input}
-                        value={field.value}
-                        allowNegative={false}
-                        onValueChange={(value) => {
-                          field.onChange(value.formattedValue);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="gender"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel htmlFor="input-customer-address">Jenis Kelamin</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        id="input-customer-address"
-                        className="disabled:opacity-100"
-                        disabled={action === "detail"}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             <FormField
               control={form.control}
-              name="profile_picture"
+              name="phone_number"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="input-customer-profile-picture">Foto Profil</FormLabel>
+                <FormItem className="w-full">
+                  <FormLabel htmlFor="input-user-phone_number">
+                    Asal Sekolah
+                  </FormLabel>
                   <FormControl>
-                    <FileInput
-                      preview={preview}
-                      onChange={(e) => {
-                        field.onChange(e.target.files[0]);
-
-                        if (action !== "detail") {
-                          setPreview(
-                            e.target.files[0] ? URL.createObjectURL(e.target.files[0]) : null
-                          );
-                        }
-                      }}
-                      id="input-customer-profile-picture"
+                    <Input
+                      {...field}
+                      id="input-user-address"
+                      className="disabled:opacity-100"
+                      disabled={action === "detail"}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel htmlFor="input-user-address">
+                    Tahun Lulus
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="input-user-address"
+                      className="disabled:opacity-100"
+                      disabled={action === "detail"}
                     />
                   </FormControl>
                   <FormMessage />
@@ -246,7 +219,11 @@ const CustomerForm = ({ action, id }) => {
                 id="btn-action-positive"
                 className="bg-[#293066] w-24 hover:bg-[#293066]/80"
               >
-                {processing ? <Loader2 className="animate-spin w-7 h-7" /> : "Edit data"}
+                {processing ? (
+                  <Loader2 className="animate-spin w-7 h-7" />
+                ) : (
+                  "Edit data"
+                )}
               </Button>
             </div>
           </>
@@ -255,4 +232,4 @@ const CustomerForm = ({ action, id }) => {
     </Form>
   );
 };
-export default CustomerForm;
+export default userForm;
