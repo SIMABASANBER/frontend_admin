@@ -29,10 +29,6 @@ export const columns = [
     accessorKey: "graduation_year",
   },
   {
-    header: "Verifikasi",
-    accessorKey: "isVerified",
-  },
-  {
     header: "Aksi",
     cell: ({ row }) => {
       const id = row.original.id;
