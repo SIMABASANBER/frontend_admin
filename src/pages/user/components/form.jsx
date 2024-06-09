@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SkeletonForm from "./skeleton/skeleton-form";
-import { userSchema, editUser, getDetailUser } from "@/utils/api/user";
+import { userSchema, getUserById, editUser, addUser } from "@/utils/api/user";
 import {
   Form,
   FormControl,
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const userForm = ({ action, id }) => {
+const UserForm = ({ action, id }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -32,52 +32,68 @@ const userForm = ({ action, id }) => {
     },
   });
 
-  useEffect(() => {
+  const getDetailUser = async (id) => {
     setLoading(true);
-    getDetailUser(id)
-      .then((data) => {
-        const { fullname, username, email, from_school, graduation_year } =
-          data;
-        form.reset({
-          fullname,
-          username,
-          email,
-          from_school,
-          graduation_year,
-        });
-      })
-      .catch((message) => {
-        Toast.fire({ icon: "error", title: message });
-      })
-      .finally(() => {
-        setLoading(false);
+    try {
+      const data = await getUserById(id);
+      const { fullname, username, email, from_school, graduation_year } =
+        data;
+
+      form.reset({
+        fullname, username, email, from_school, graduation_year,
       });
+      setLoading(false);
+    } catch (error) {
+      Toast.fire({ icon: "error", title: error });
+      navigate("/user");
+    }
+  };
+
+  useEffect(() => {
+    if (action !== "add") {
+      getDetailUser(id);
+    }
   }, []);
 
   const onSubmit = (data) => {
-    const { fullname, username, email, from_school, graduation_year } = data;
+    const { fullname, username, email, from_school, graduation_year } =
+      data;
 
-    const editedData = {
-      fullname,
-      username,
-      email,
-      from_school,
-      graduation_year,
-    };
+    if (action === "add") {
+      setProcessing(true);
+      addUser({
+        fullname, username, email, from_school, graduation_year,
+      })
+        .then((message) => {
+          navigate("/user");
+          Toast.fire({ icon: "success", title: message });
+        })
+        .catch((message) => {
+          navigate("/user");
+          Toast.fire({ icon: "error", title: message });
+        })
+        .finally(() => {
+          setProcessing(false);
+        });
+    } else if (action === "edit") {
+      setProcessing(true);
+      const editedData = {
+        fullname, username, email, from_school, graduation_year,
+      };
 
-    setProcessing(true);
-    editUser(id, editedData)
-      .then((message) => {
-        navigate("/user");
-        Toast.fire({ icon: "success", title: message });
-      })
-      .catch((message) => {
-        navigate("/user");
-        Toast.fire({ icon: "error", title: message });
-      })
-      .finally(() => {
-        setProcessing(false);
-      });
+      editUser(id, editedData)
+        .then((message) => {
+          navigate("/user");
+          Toast.fire({ icon: "success", title: message });
+        })
+        .catch((message) => {
+          navigate("/user");
+          Toast.fire({ icon: "error", title: message });
+        })
+        .finally(() => {
+          setProcessing(false);
+        });
+    }
   };
 
   const Toast = Swal.mixin({
@@ -101,58 +117,16 @@ const userForm = ({ action, id }) => {
           <SkeletonForm />
         ) : (
           <>
-            <div className="flex gap-4">
-              <FormField
-                control={form.control}
-                name="fullname"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel htmlFor="input-user-fullname">
-                      Nama lengkap
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        id="input-user-fullname"
-                        className="disabled:opacity-100"
-                        disabled={action === "detail"}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel htmlFor="input-user-fullname">
-                      Username
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        id="input-user-fullname"
-                        className="disabled:opacity-100"
-                        disabled={action === "detail"}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             <FormField
               control={form.control}
-              name="address"
+              name="fullname"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="input-user-address">Email</FormLabel>
+                <FormItem className="w-full">
+                  <FormLabel htmlFor="input-fullname">Nama Lengkap</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-user-address"
+                      id="input-fullname"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -163,16 +137,52 @@ const userForm = ({ action, id }) => {
             />
             <FormField
               control={form.control}
-              name="phone_number"
+              name="username"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-user-phone_number">
+                  <FormLabel htmlFor="input-username">Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="input-username"
+                      className="disabled:opacity-100"
+                      disabled={action === "detail"}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="input-email">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="input-email"
+                      className="disabled:opacity-100"
+                      disabled={action === "detail"}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="from_school"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel htmlFor="input-from_school">
                     Asal Sekolah
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-user-address"
+                      id="input-from_school"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -183,16 +193,16 @@ const userForm = ({ action, id }) => {
             />
             <FormField
               control={form.control}
-              name="gender"
+              name="graduation_year"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-user-address">
+                  <FormLabel htmlFor="input-graduation_year">
                     Tahun Lulus
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-user-address"
+                      id="input-graduation_year"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -209,7 +219,9 @@ const userForm = ({ action, id }) => {
                 id="btn-action-negative"
                 disabled={processing}
                 onClick={() => navigate("/user")}
-                className={`bg-white w-24 text-[#293066] border-solid border-2 border-[#293066] hover:bg-[#293066] hover:text-white ${action === 'detail' ? 'hidden' : ''}`}
+                className={`bg-white w-24 text-[#293066] border-solid border-2 border-[#293066] hover:bg-[#293066] hover:text-white ${
+                  action === "detail" ? "hidden" : ""
+                }`}
               >
                 Kembali
               </Button>
@@ -217,11 +229,13 @@ const userForm = ({ action, id }) => {
                 size="sm"
                 type="submit"
                 id="btn-action-positive"
-                className={`bg-[#293066] w-24 hover:bg-[#293066]/80 ${action === 'detail' ? 'hidden' : ''}`}
+                className={`bg-[#293066] w-24 hover:bg-[#293066]/80 ${
+                  action === "detail" ? "hidden" : ""
+                }`}
               >
                 {processing ? (
                   <Loader2 className="animate-spin w-7 h-7" />
-                ) :action === "edit" ? (
+                ) : action === "edit" ? (
                   "Edit data"
                 ) : (
                   "Tambah"
@@ -234,4 +248,4 @@ const userForm = ({ action, id }) => {
     </Form>
   );
 };
-export default userForm;
+export default UserForm;
