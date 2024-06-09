@@ -1,16 +1,11 @@
 import axiosWithConfig from "../axiosWithConfig";
 
-export const getUsers = async (pageIndex, pageSize, name) => {
+export const getUsers = async (pageIndex, pageSize) => {
   try {
-    if (name) {
-      const response = await axiosWithConfig.get(`/users?name=${name}`);
-      return response.data;
-    } else {
       const response = await axiosWithConfig.get(
         `/users?page=${pageIndex}&page_size=${pageSize}`
       );
       return response.data;
-    }
   } catch (error) {
     console.error(error);
     throw error;
