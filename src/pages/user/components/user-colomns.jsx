@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PencilIcon from "@/assets/icon/pencil";
+import InfoIcon from "@/assets/icon/info";
 import { Button } from "@/components/ui/button";
 import ButtonDelete from "@/pages/user/components/alert-dialog";
 
