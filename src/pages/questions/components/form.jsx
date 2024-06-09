@@ -161,11 +161,11 @@ const QuestionForm = ({ action, id }) => {
               name="choice_a"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-question">Choice A</FormLabel>
+                  <FormLabel htmlFor="input-question-choice_a">Choice A</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-title"
+                      id="input-questions-choice_a"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -179,11 +179,11 @@ const QuestionForm = ({ action, id }) => {
               name="choice_b"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="input-choice-b">Choice B</FormLabel>
+                  <FormLabel htmlFor="input-questions-choice_b">Choice B</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-address"
+                      id="input-questions-choice_b"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -197,13 +197,13 @@ const QuestionForm = ({ action, id }) => {
               name="choice_c"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-choice-c">
+                  <FormLabel htmlFor="input-questions-choice-c">
                     Choice C
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-address"
+                      id="input-questions-choice_c"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -217,13 +217,13 @@ const QuestionForm = ({ action, id }) => {
               name="choice_d"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-questions-address">
+                  <FormLabel htmlFor="input-questions-choice_d">
                     Choice D
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-address"
+                      id="input-questions-choice_d"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -237,13 +237,13 @@ const QuestionForm = ({ action, id }) => {
               name="correct_answer"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-questions-address">
+                  <FormLabel htmlFor="input-correct_answer">
                     Correct Answer
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-address"
+                      id="input-correct_answer"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
