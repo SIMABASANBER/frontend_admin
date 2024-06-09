@@ -63,7 +63,7 @@ function Questions() {
             className="rounded-full bg-[#293066] hover:bg-[#293066]/80"
             asChild
           >
-            <Link to="/questions/create-questions">Create Question</Link>
+            <Link to="/questions/create-question">Create Question</Link>
           </Button>
         </TableHeader>
         <TableData
