@@ -7,12 +7,17 @@ import Questions from "@/pages/questions";
 import DetailQuestion from "@/pages/questions/detail-questions";
 import AddQuestion from "@/pages/questions/add-questions";
 import Ranking from "@/pages/ranking";
+import Dashboard from "@/pages/dashboard";
 
 export default function Router() {
   const router = createBrowserRouter([
         {
           path: "/",
           element: <Login />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
         },
         {
           path: "/user",
