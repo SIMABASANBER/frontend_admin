@@ -3,6 +3,9 @@ import Login from "@/pages/login";
 import User from "@/pages/user";
 import DetailUser from "@/pages/user/detail-user";
 import AddUser from "@/pages/user/add-user";
+import Questions from "@/pages/questions";
+import DetailQuestion from "@/pages/questions/detail-questions";
+import AddQuestion from "@/pages/questions/add-questions";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -24,15 +27,15 @@ export default function Router() {
         },
         {
           path: "/questions",
-          element: <User />,
+          element: <Questions />,
         },
         {
           path: "/question/:id",
-          element: <DetailUser />,
+          element: <DetailQuestion/>,
         },
         {
           path: "/questions/create-question",
-          element: <AddUser />,
+          element: <AddQuestion/>,
         },
   ]);
 
