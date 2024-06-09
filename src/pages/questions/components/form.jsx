@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const questionForm = ({ action, id }) => {
+const QuestionForm = ({ action, id }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -289,4 +289,4 @@ const questionForm = ({ action, id }) => {
     </Form>
   );
 };
-export default questionForm;
+export default QuestionForm;
