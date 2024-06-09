@@ -1,6 +1,6 @@
 import Header from "@/components/header";
 import Layout from "@/components/layout";
-import FundraiseForm from "./components/form";
+import UserForm from "./components/form";
 import FormLayout from "./components/form-layout";
 import FormHeader from "./components/form-header";
 
@@ -10,7 +10,7 @@ function AddUser() {
       <Header titleHeader="User" />
       <FormLayout>
         <FormHeader title="add" />
-        <FundraiseForm action="add" />
+        <UserForm action="add" />
       </FormLayout>
     </Layout>
   );
