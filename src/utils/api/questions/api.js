@@ -1,6 +1,6 @@
 import axiosWithConfig from "../axiosWithConfig";
 
-export const getQuestions = async (pageIndex, pageSize, name) => {
+export const getQuestions = async (pageIndex, pageSize) => {
   try {
       const response = await axiosWithConfig.get(
         `/quesions?page=${pageIndex}&page_size=${pageSize}`
