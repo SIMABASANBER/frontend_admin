@@ -43,7 +43,7 @@ function Login() {
       const accessToken = response.access_token;
       const profile = {
         role_id: response.role_id,
-        fullname: response.fullname,
+        fullname: response.username,
       };
 
       if (profile.role_id !== 2) {
@@ -56,7 +56,7 @@ function Login() {
 
       Toast.fire({ icon: "success", title: "Login berhasil" });
       changeProfile(profile);
-      changeToken(accessToken, refreshToken);
+      changeToken(accessToken);
       navigate("/dashboard");
     } catch (error) {
       setErrorMessage(error.message);
