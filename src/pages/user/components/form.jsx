@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SkeletonForm from "./skeleton/skeleton-form";
-import { userSchema, getUserById, editUser, addUser } from "@/utils/api/user";
+import { getUserById, editUser, addUser } from "@/utils/api/user";
 import {
   Form,
   FormControl,
@@ -15,18 +15,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 const UserForm = ({ action, id }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
   const form = useForm({
-    resolver: zodResolver(userSchema),
     defaultValues: {
       fullname: "",
       username: "",
-      email: "",
       from_school: "",
       graduation_year: "",
     },
@@ -36,11 +33,11 @@ const UserForm = ({ action, id }) => {
     setLoading(true);
     try {
       const data = await getUserById(id);
-      const { fullname, username, email, from_school, graduation_year } =
+      const { fullname, username, from_school, graduation_year } =
         data;
 
       form.reset({
-        fullname, username, email, from_school, graduation_year,
+        fullname, username, from_school, graduation_year,
       });
       setLoading(false);
     } catch (error) {
@@ -58,11 +55,11 @@ const UserForm = ({ action, id }) => {
   const onSubmit = (data) => {
     const { fullname, username, email, from_school, graduation_year } =
       data;
-
+      console.log(fullname, username, email, from_school, graduation_year)
     if (action === "add") {
       setProcessing(true);
       addUser({
-        fullname, username, email, from_school, graduation_year,
+        fullname, username, from_school, graduation_year,
       })
         .then((message) => {
           navigate("/user");
@@ -78,7 +75,7 @@ const UserForm = ({ action, id }) => {
     } else if (action === "edit") {
       setProcessing(true);
       const editedData = {
-        fullname, username, email, from_school, graduation_year,
+        fullname, username, from_school, graduation_year,
       };
 
       editUser(id, editedData)
@@ -122,11 +119,11 @@ const UserForm = ({ action, id }) => {
               name="fullname"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-fullname">Nama Lengkap</FormLabel>
+                  <FormLabel htmlFor="fullname">Nama Lengkap</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-fullname"
+                      id="fullname"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -140,11 +137,11 @@ const UserForm = ({ action, id }) => {
               name="username"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-username">Username</FormLabel>
+                  <FormLabel htmlFor="username">Username</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-username"
+                      id="username"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -176,13 +173,13 @@ const UserForm = ({ action, id }) => {
               name="from_school"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-from_school">
+                  <FormLabel htmlFor="from_school">
                     Asal Sekolah
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-from_school"
+                      id="from_school"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -196,13 +193,13 @@ const UserForm = ({ action, id }) => {
               name="graduation_year"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-graduation_year">
+                  <FormLabel htmlFor="graduation_year">
                     Tahun Lulus
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-graduation_year"
+                      id="graduation_year"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />

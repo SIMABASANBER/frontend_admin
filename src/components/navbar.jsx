@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import useStore from "@/utils/store/store";
 import { useNavigate } from "react-router-dom";
-// import { useToken } from "@/utils/context/token";
+import { useAuth } from "@/utils/context/auth-context";
 import dropdown from "@/assets/icon/DropDown.png";
 import hamburgerIcon from "@/assets/logo/hamburger.svg";
 import btnLogout from "@/assets/icon/btn-logout.svg"
@@ -25,14 +25,8 @@ const Toast = Swal.mixin({
 function Navbar() {
   const navigate = useNavigate();
   const { toggleSidebar } = useStore();
-  // const { token, profile, changeToken, changeProfile } = useToken();
+  const {logout } = useAuth();
 
-  function handleLogout() {
-    changeToken("");
-    // changeProfile("");
-    Toast.fire({ icon: "success", title: "Logout berhasil" });
-    navigate("/login");
-  }
 
   return (
     <div className="sticky top-0 z-10 h-16 bg-[#293066] flex items-center justify-between shadow-md px-8">
@@ -50,7 +44,7 @@ function Navbar() {
           <div className="px-3 py-2 text-[#F64C4C] cursor-pointer flex gap-2">
             <img id="btn-logout" src={btnLogout}alt="btn-logout" className="w-5 h-5" />
 
-              <p className="mt-[-0.125rem]" onClick={() => handleLogout()}>
+              <p className="mt-[-0.125rem]" onClick={logout}>
                 Keluar
               </p>
             

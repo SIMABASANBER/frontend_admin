@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SkeletonForm from "./skeleton/skeleton-form";
 import {
-  questionsSchema,
+
   getQuestionById,
   addQuestion,
   editQuestion,
@@ -20,21 +20,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 
 const QuestionForm = ({ action, id }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
   const form = useForm({
-    resolver: zodResolver(questionsSchema),
+   
     defaultValues: {
       title: "",
-      choice_a: "",
-      choice_b: "",
-      choice_c: "",
-      choice_d: "",
-      correct_answer: "",
+      choise_a: "",
+      choise_b: "",
+      choise_c: "",
+      choise_d: "",
+      correct_answer: ""
     },
   });
 
@@ -42,16 +42,16 @@ const QuestionForm = ({ action, id }) => {
     setLoading(true);
     try {
       const data = await getQuestionById(id);
-      const { title, choice_a, choice_b, choice_c, choice_d, correct_answer } =
+      const { title, choise_a, choise_b, choise_c, choise_d, correct_answer } =
         data;
 
       form.reset({
         title,
-        choice_a,
-        choice_b,
-        choice_c,
-        choice_d,
-        correct_answer,
+        choise_a,
+        choise_b,
+        choise_c,
+        choise_d,
+        correct_answer
       });
       setLoading(false);
     } catch (error) {
@@ -67,18 +67,18 @@ const QuestionForm = ({ action, id }) => {
   }, []);
 
   const onSubmit = (data) => {
-    const { title, choice_a, choice_b, choice_c, choice_d, correct_answer } =
+    const { title, choise_a, choise_b, choise_c, choise_d, correct_answer } =
       data;
 
     if (action === "add") {
       setProcessing(true);
       addQuestion({
         title,
-        choice_a,
-        choice_b,
-        choice_c,
-        choice_d,
-        correct_answer,
+        choise_a,
+        choise_b,
+        choise_c,
+        choise_d,
+        correct_answer
       })
         .then((message) => {
           navigate("/questions");
@@ -95,11 +95,11 @@ const QuestionForm = ({ action, id }) => {
       setProcessing(true);
       const editedData = {
         title,
-        choice_a,
-        choice_b,
-        choice_c,
-        choice_d,
-        correct_answer,
+        choise_a,
+        choise_b,
+        choise_c,
+        choise_d,
+        correct_answer
       };
 
       editQuestion(id, editedData)
@@ -158,14 +158,14 @@ const QuestionForm = ({ action, id }) => {
             />
             <FormField
               control={form.control}
-              name="choice_a"
+              name="choise_a"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-question-choice_a">Choice A</FormLabel>
+                  <FormLabel htmlFor="input-question-choise_a">choise A</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-choice_a"
+                      id="input-questions-choise_a"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -176,14 +176,14 @@ const QuestionForm = ({ action, id }) => {
             />
             <FormField
               control={form.control}
-              name="choice_b"
+              name="choise_b"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="input-questions-choice_b">Choice B</FormLabel>
+                  <FormLabel htmlFor="input-questions-choise_b">choise B</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-choice_b"
+                      id="input-questions-choise_b"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -194,16 +194,16 @@ const QuestionForm = ({ action, id }) => {
             />
             <FormField
               control={form.control}
-              name="choice_c"
+              name="choise_c"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-questions-choice-c">
-                    Choice C
+                  <FormLabel htmlFor="input-questions-choise-c">
+                    choise C
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-choice_c"
+                      id="input-questions-choise_c"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
@@ -214,16 +214,16 @@ const QuestionForm = ({ action, id }) => {
             />
             <FormField
               control={form.control}
-              name="choice_d"
+              name="choise_d"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-questions-choice_d">
-                    Choice D
+                  <FormLabel htmlFor="input-questions-choise_d">
+                    choise D
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-questions-choice_d"
+                      id="input-questions-choise_d"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />

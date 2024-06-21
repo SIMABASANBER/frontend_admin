@@ -3,7 +3,7 @@ import axiosWithConfig from "../axiosWithConfig";
 export const getQuestions = async (pageIndex, pageSize) => {
   try {
       const response = await axiosWithConfig.get(
-        `/quesions?page=${pageIndex}&page_size=${pageSize}`
+        `/question?page=${pageIndex}&page_size=${pageSize}`
       );
       return response.data;
   } catch (error) {
@@ -14,8 +14,8 @@ export const getQuestions = async (pageIndex, pageSize) => {
 
 export const getQuestionById= async (id) => {
   try {
-    const response = await axiosWithConfig.get(`/quesions/${id}`);
-    return response.data.data;
+    const response = await axiosWithConfig.get(`/question/${id}`);
+    return response.data;
   } catch (error) {
     console.error(error);
     throw error;
@@ -25,7 +25,7 @@ export const getQuestionById= async (id) => {
 export const addQuestion = async ({ ...data }) => {
     try {
       await axiosWithConfig.post(
-        "/questions",
+        "/question",
         { ...data },
         {
           headers: {
@@ -43,7 +43,7 @@ export const addQuestion = async ({ ...data }) => {
 export const editQuestion = async (id, { ...data }) => {
   try {
     await axiosWithConfig.put(
-      `/quesions/${id}`,
+      `/question/${id}`,
       {
         ...data,
       },
@@ -62,7 +62,7 @@ export const editQuestion = async (id, { ...data }) => {
 
 export const deleteQuestion = async (id) => {
   try {
-    await axiosWithConfig.delete(`/quesions/${id}`);
+    await axiosWithConfig.delete(`/question/${id}`);
     return "Berhasil menghapus data quesion";
   } catch (error) {
     console.error(error);

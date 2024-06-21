@@ -9,6 +9,7 @@ import { ButtonClick } from "@/components/button";
 import { InputLabel } from "@/components/input-with-label";
 import iconEyeOpen from "@/assets/logo/icon-eye-open.svg";
 import iconEyeClose from "@/assets/logo/icon-eye-close.svg";
+import { useAuth } from "@/utils/context/auth-context";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -23,6 +24,7 @@ const Toast = Swal.mixin({
 
 function Login() {
   const navigate = useNavigate();
+  const { login: contextLogin } = useAuth();
   const [changeIcon, setChangeIcon] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -39,24 +41,17 @@ function Login() {
     const { email, password } = data;
 
     try {
-      const response = await login(email, password);
-      const accessToken = response.access_token;
-      const profile = {
-        role_id: response.role_id,
-        fullname: response.username,
-      };
-
-      if (profile.role_id !== 2) {
+      if (email !== "admin@gmail.com") {
         Toast.fire({
           icon: "info",
           title: "Hanya admin yang bisa mengakses halaman ini",
         });
         throw new Error("Hanya admin yang bisa mengakses halaman ini");
       }
-
+      const response = await login(email, password);
+      const token = response.token;
       Toast.fire({ icon: "success", title: "Login berhasil" });
-      changeProfile(profile);
-      changeToken(accessToken);
+      contextLogin(token);
       navigate("/dashboard");
     } catch (error) {
       setErrorMessage(error.message);

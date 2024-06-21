@@ -15,19 +15,19 @@ export const columns = [
   },
   {
     header: "Choice A",
-    accessorKey: "choice_a",
+    accessorKey: "choise_a",
   },
   {
     header: "Choice B",
-    accessorKey: "choice_b",
+    accessorKey: "choise_b",
   },
   {
     header: "Choice C",
-    accessorKey: "choice_c",
+    accessorKey: "choise_c",
   },
   {
     header: "Choice D",
-    accessorKey: "choice_d",
+    accessorKey: "choise_d",
   },
   {
     header: "Aksi",
@@ -42,7 +42,7 @@ export const columns = [
             className="bg-[#E28100] hover:bg-[#E28100]/80"
             style={{ boxShadow: "0px 4px 4px 0px #00000040" }}
           >
-            <Link to={`/questions/${id}?edit=true`}>
+            <Link to={`/question/${id}?edit=true`}>
               <PencilIcon className="w-4 h-4" />
             </Link>
           </Button>
@@ -53,7 +53,7 @@ export const columns = [
             className="bg-[#166648] hover:bg-[#166648]/80"
             style={{ boxShadow: "0px 4px 4px 0px #00000040" }}
           >
-            <Link to={`/questions/${id}`}>
+            <Link to={`/question/${id}`}>
               <InfoIcon className="w-4 h-4" />
             </Link>
           </Button>

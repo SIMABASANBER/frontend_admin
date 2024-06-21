@@ -6,7 +6,8 @@ export const login = async (email, password) => {
       email,
       password,
     });
-    return response.data.data;
+    console.log(response)
+    return response.data;
   } catch (error) {
     throw new Error("Email atau kata sandi salah");
   }
