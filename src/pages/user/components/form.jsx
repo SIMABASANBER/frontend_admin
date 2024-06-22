@@ -34,11 +34,11 @@ const UserForm = ({ action, id }) => {
     setLoading(true);
     try {
       const data = await getUserById(id);
-      const { fullname, username, email, from_school, graduation_year } =
+      const { fullname, username, email, from_school, graduation_year} =
         data;
 
       form.reset({
-        fullname, username, from_school, email, graduation_year,
+        fullname, username, from_school, email, graduation_year
       });
       setLoading(false);
     } catch (error) {
@@ -54,12 +54,12 @@ const UserForm = ({ action, id }) => {
   }, []);
 
   const onSubmit = (data) => {
-    const { fullname, username, email, from_school, graduation_year } =
+    const { fullname, username, email, from_school, graduation_year, password } =
       data;
     if (action === "add") {
       setProcessing(true);
       addUser({
-        fullname, username, email, from_school, graduation_year,
+        fullname, username, email, from_school, graduation_year, password
       })
         .then((message) => {
           navigate("/user");
@@ -75,7 +75,7 @@ const UserForm = ({ action, id }) => {
     } else if (action === "edit") {
       setProcessing(true);
       const editedData = {
-        fullname, username, email, from_school, graduation_year,
+        fullname, username, email, from_school, graduation_year, password
       };
 
       editUser(id, editedData)
@@ -168,6 +168,24 @@ const UserForm = ({ action, id }) => {
                 </FormItem>
               )}
             />
+            {action == "add" && ( <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="upassword"
+                      className="disabled:opacity-100"
+                      disabled={action === "detail"}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />)}
             <FormField
               control={form.control}
               name="from_school"
