@@ -21,7 +21,7 @@ export const columns = [
   },
   {
     header: "Nilai",
-    accessorKey: "grade",
+    accessorKey: "nilai",
   },
   {
     header: "Grade",

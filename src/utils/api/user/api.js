@@ -1,10 +1,8 @@
 import axiosWithConfig from "../axiosWithConfig";
 
-export const getUsers = async (pageIndex, pageSize) => {
+export const getUsers = async () => {
   try {
-    const response = await axiosWithConfig.get(
-      `/user?page=${pageIndex}&page_size=${pageSize}`
-    );
+    const response = await axiosWithConfig.get(`/user`);
     return response;
   } catch (error) {
     console.error(error);
@@ -30,7 +28,7 @@ export const addUser = async ({ ...data }) => {
       { ...data },
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       }
     );
@@ -50,7 +48,7 @@ export const editUser = async (id, { ...data }) => {
       },
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       }
     );

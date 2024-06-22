@@ -2,9 +2,9 @@ import axiosWithConfig from "../axiosWithConfig"
 
 export const getTotalDataUser = async () => {
     try {
-        const response = await axiosWithConfig.get(`/user/count`);
+        const response = await axiosWithConfig.get(`/user/total`);
         console.log(response)
-        return response.totalUser;
+        return response.data.total_user;
     } catch (error) {
         console.error(error)
         return 0;
@@ -13,8 +13,8 @@ export const getTotalDataUser = async () => {
 
 export const getTotalDataQuestions = async () => {
     try {
-        const response = await axiosWithConfig.get(`/question/count`);
-        return response.totalQuestions;
+        const response = await axiosWithConfig.get(`/question/total`);
+        return response.data.total_question;
     } catch (error) {
         console.error(error);
         return 0;
@@ -23,8 +23,8 @@ export const getTotalDataQuestions = async () => {
 
 export const getTotalDataRanking = async () => {
     try {
-        const response = await axiosWithConfig.get(`/ranking/count`);
-        return response.totalRanking;
+        const response = await axiosWithConfig.get(`/rangking/total`);
+        return response.data.total_rangking;
     } catch (error) {
         console.error(error);
         return 0;

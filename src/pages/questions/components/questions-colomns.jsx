@@ -30,6 +30,10 @@ export const columns = [
     accessorKey: "choise_d",
   },
   {
+    header: "Correct Answer",
+    accessorKey: "correct_answer",
+  },
+  {
     header: "Aksi",
     cell: ({ row }) => {
       const id = row.original.id;

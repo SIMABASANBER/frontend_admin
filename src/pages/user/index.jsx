@@ -12,16 +12,10 @@ import { Link } from "react-router-dom";
 function User() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [
-    { pageIndex, pageSize},
-  ] = useState({
-    pageIndex: 1,
-    pageSize: 10,
-  });
 
   useEffect(() => {
     setLoading(true);
-    getUsers(pageIndex, pageSize)
+    getUsers()
       .then((data) => {
         setData(data.data);
         setLoading(false);
@@ -30,7 +24,7 @@ function User() {
         setData([]);
         setLoading(false);
       });
-  }, [pageIndex, pageSize]);
+  }, []);
 
   return (
     <Layout>

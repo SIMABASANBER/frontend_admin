@@ -34,7 +34,7 @@ const QuestionForm = ({ action, id }) => {
       choise_b: "",
       choise_c: "",
       choise_d: "",
-      correct_answer: ""
+      correct_answer: "",
     },
   });
 
@@ -51,7 +51,7 @@ const QuestionForm = ({ action, id }) => {
         choise_b,
         choise_c,
         choise_d,
-        correct_answer
+        correct_answer,
       });
       setLoading(false);
     } catch (error) {
@@ -78,7 +78,7 @@ const QuestionForm = ({ action, id }) => {
         choise_b,
         choise_c,
         choise_d,
-        correct_answer
+        correct_answer,
       })
         .then((message) => {
           navigate("/questions");
@@ -99,7 +99,7 @@ const QuestionForm = ({ action, id }) => {
         choise_b,
         choise_c,
         choise_d,
-        correct_answer
+        correct_answer,
       };
 
       editQuestion(id, editedData)
@@ -237,13 +237,13 @@ const QuestionForm = ({ action, id }) => {
               name="correct_answer"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel htmlFor="input-correct_answer">
+                  <FormLabel htmlFor="correct_answer">
                     Correct Answer
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-correct_answer"
+                      id="correct_answer"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />

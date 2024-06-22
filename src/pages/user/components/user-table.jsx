@@ -46,6 +46,11 @@ function TableData({ columns, data, loading }) {
             <SkeletonTable />
             <SkeletonTable />
             <SkeletonTable />
+            <SkeletonTable />
+            <SkeletonTable />
+            <SkeletonTable />
+            <SkeletonTable />
+            <SkeletonTable />
           </>
         ) : (
           <TableBody>

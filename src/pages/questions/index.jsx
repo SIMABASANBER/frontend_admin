@@ -12,19 +12,10 @@ import { Link } from "react-router-dom";
 function Questions() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [
-    { pageIndex, pageSize},
-  ] = useState({
-    pageIndex: 1,
-    pageSize: 10,
-    prevPage: 0,
-    currentPage: 0,
-    totalPage: 0,
-  });
 
   useEffect(() => {
     setLoading(true);
-    getQuestions(pageIndex, pageSize)
+    getQuestions()
       .then((data) => {
         setData(data);
         setLoading(false);
@@ -33,7 +24,7 @@ function Questions() {
         setData([]);
         setLoading(false);
       });
-  }, [pageIndex, pageSize]);
+  }, []);
 
   return (
     <Layout>

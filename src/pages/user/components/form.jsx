@@ -24,6 +24,7 @@ const UserForm = ({ action, id }) => {
     defaultValues: {
       fullname: "",
       username: "",
+      email: "",
       from_school: "",
       graduation_year: "",
     },
@@ -33,11 +34,11 @@ const UserForm = ({ action, id }) => {
     setLoading(true);
     try {
       const data = await getUserById(id);
-      const { fullname, username, from_school, graduation_year } =
+      const { fullname, username, email, from_school, graduation_year } =
         data;
 
       form.reset({
-        fullname, username, from_school, graduation_year,
+        fullname, username, from_school, email, graduation_year,
       });
       setLoading(false);
     } catch (error) {
@@ -55,11 +56,10 @@ const UserForm = ({ action, id }) => {
   const onSubmit = (data) => {
     const { fullname, username, email, from_school, graduation_year } =
       data;
-      console.log(fullname, username, email, from_school, graduation_year)
     if (action === "add") {
       setProcessing(true);
       addUser({
-        fullname, username, from_school, graduation_year,
+        fullname, username, email, from_school, graduation_year,
       })
         .then((message) => {
           navigate("/user");
@@ -75,7 +75,7 @@ const UserForm = ({ action, id }) => {
     } else if (action === "edit") {
       setProcessing(true);
       const editedData = {
-        fullname, username, from_school, graduation_year,
+        fullname, username, email, from_school, graduation_year,
       };
 
       editUser(id, editedData)
@@ -155,11 +155,11 @@ const UserForm = ({ action, id }) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="input-email">Email</FormLabel>
+                  <FormLabel htmlFor="email">Email</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id="input-email"
+                      id="email"
                       className="disabled:opacity-100"
                       disabled={action === "detail"}
                     />
