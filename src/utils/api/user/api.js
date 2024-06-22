@@ -22,7 +22,6 @@ export const getUserById = async (id) => {
 
 export const addUser = async ({ ...data }) => {
   try {
-    console.log({ ...data });
     await axiosWithConfig.post(
       "/user",
       { ...data },

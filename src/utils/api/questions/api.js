@@ -3,7 +3,6 @@ import axiosWithConfig from "../axiosWithConfig";
 export const getQuestions = async () => {
   try {
     const response = await axiosWithConfig.get(`/question/admin`);
-    console.log(response)
     return response.data;
   } catch (error) {
     console.error(error);

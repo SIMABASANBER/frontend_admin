@@ -3,7 +3,6 @@ import axiosWithConfig from "../axiosWithConfig"
 export const getTotalDataUser = async () => {
     try {
         const response = await axiosWithConfig.get(`/user/total`);
-        console.log(response)
         return response.data.total_user;
     } catch (error) {
         console.error(error)
